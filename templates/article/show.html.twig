@@ -3,12 +3,30 @@
 {% block title %}{{ article.title }}{% endblock %}
 
 {% block body %}
-    <article class="container position-relative mb-5 pb-5">
+    <article class="container position-relative mb-2 pb-5">
         <h1>{{ article.title }}</h1>
 
         <p>{{ article.content|raw }}</p>
 
         <span class="position-absolute bottom-0 end-0">{{ article.createdAt|date('d M Y') }}</span>
+
+
+        <h2 class="comment-title mt-5">
+            <span class="comment-count">{{ article.comments|length }}</span> Comentário{% if article.comments|length > 1 %}s{% endif %}
+        </h2>
+
+        <hr>
+
+        <div class="comment-area mb-5">
+            {{ form(commentForm, {'attr' : {'class': 'comment-form'} }) }}
+        </div>
+
+
+        <div class="comment-list">
+            {% for comment in article.comments %}
+                {% include 'comment/index.html.twig' with [comment] %}
+            {% endfor %}
+        </div>
     </article>
 
 {% endblock %}
