@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registrar-se Worldtecpt{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="container w-50 mx-auto">
+        <h1>Registrar-se</h1>
+        {{ form_errors(registrationForm) }}
+
+        {{ form_start(registrationForm) }}
+        {{ form_row(registrationForm.username) }}
+        {{ form_row(registrationForm.plainPassword) }}
+
+
+        <button type="submit" class="btn btn-primary">Registrar-se</button>
+        {{ form_end(registrationForm) }}
+
+    </div>
+
+
+{% endblock %}
