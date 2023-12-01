@@ -8,6 +8,15 @@
 
     <div class="container w-50 mx-auto">
         <h1>Registrar-se</h1>
+
+        {% if notification %}
+            <div class="alert alert-success">
+                {{ notification }}
+            </div>
+            <hr>
+
+
+        {% endif %}
         {{ form_errors(registrationForm) }}
 
         {{ form_start(registrationForm) }}
