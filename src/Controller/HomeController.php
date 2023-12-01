@@ -12,8 +12,10 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(ArticleRepository $articleRepository): Response
     {
+        $notification = null;
         return $this->render('home/index.html.twig', [
             'articles' => $articleRepository->findAll(),
+            'notification' => $notification,
         ]);
     }
 }
