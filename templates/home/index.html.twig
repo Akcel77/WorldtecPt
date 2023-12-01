@@ -3,6 +3,14 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
+    {% if notification %}
+        <div class="alert alert-success">
+            {{ notification }}
+        </div>
+        <hr>
+
+
+    {% endif %}
     <main class="container">
         <div class="row">
             <div class="col-md-4">
