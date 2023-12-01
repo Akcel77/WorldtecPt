@@ -18,6 +18,7 @@
     </head>
     <body>
 
+    {% if is_granted('ROLE_AUTHOR') %}
         <nav class="py-2 bg-dark border-bottom">
             <div class="container d-flex flex-wrap">
                 <div class="dropdown">
@@ -26,7 +27,9 @@
                     </a>
                     <ul class="dropdown-menu " aria-labelledby="dropdownMenuButtonAdminDashboard">
                         <li><a class="dropdown-item" href="{{ path('admin') }}">Painel de controle</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}
                         <li><a class="dropdown-item" href="{{ ea_index('MenuCrudController') }}">Menus</a></li>
+                        {% endif %}
                     </ul>
                 </div>
                 <div class="dropdown">
@@ -41,7 +44,7 @@
 
             </div>
         </nav>
-
+    {% endif %}
 
         <div class="container">
             <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -69,12 +72,31 @@
                         {% endif %}
                     {% endfor %}
 
+                    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
                    <li>
                        <a href="{{ path('app_register') }}" class="nav-link text-dark">Registrar-se</a>
                    </li>
                     <li>
                         <a href="{{ path('app_login') }}" class="nav-link text-dark">Fazer login</a>
                     </li>
+
+                    {% else %}
+                        <div class="dropdown">
+                            <a class="nav nav-link text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ app.user.username|capitalize }}
+                            </a>
+                            
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_user', { username: app.user.username }) }}">Perfil</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ path('app_logout') }}">Desconectar</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    {% endif %}
                 </ul>
             </header>
         </div>
