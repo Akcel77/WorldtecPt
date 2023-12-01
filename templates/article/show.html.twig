@@ -6,6 +6,8 @@
     <article class="container position-relative mb-2 pb-5">
         <h1>{{ article.title }}</h1>
 
+        <img src="/uploads/{{ article.featuredImage.filename }}" alt="{{ article.featuredImage.altText }}" loading="lazy" width="700" height="auto" class="styled-image">
+
         <p>{{ article.content|raw }}</p>
 
         <span class="position-absolute bottom-0 end-0">{{ article.createdAt|date('d M Y') }}</span>
@@ -17,6 +19,7 @@
 
         <hr>
 
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <div class="comment-area mb-5">
             {{ form(commentForm, {'attr' : {'class': 'comment-form'} }) }}
         </div>
@@ -27,6 +30,13 @@
                 {% include 'comment/index.html.twig' with [comment] %}
             {% endfor %}
         </div>
+
+        {% else %}
+        <div class="comment-no-see">
+            <p>Por favor, faça login para acessar a seção de comentários</p>
+        </div>
+
+        {% endif %}
     </article>
 
 {% endblock %}
