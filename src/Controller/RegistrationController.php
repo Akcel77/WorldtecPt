@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Service\OptionService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,10 +16,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RegistrationController extends AbstractController
 {
 
+    public function __construct(private OptionService $optionService)
+    {
+    }
 
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
+        $userCanRegister = $this->optionService->getValue('users_can_register');
+
+        if (!$userCanRegister){
+            return $this->redirectToRoute('app_home');
+        }
+
         $notification = null;
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);

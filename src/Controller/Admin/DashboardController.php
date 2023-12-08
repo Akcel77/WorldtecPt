@@ -7,6 +7,7 @@ use App\Entity\Category;
 use App\Entity\Comment;
 use App\Entity\Media;
 use App\Entity\Menu;
+use App\Entity\Option;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -78,6 +79,10 @@ class DashboardController extends AbstractDashboardController
             ]);
 
             yield MenuItem::linkToCrud('Comentários', 'fas fa-comment' , Comment::class);
+
+            yield MenuItem::subMenu('Configurações', 'fas fa-cog')->setSubItems([
+                MenuItem::linkToCrud('Geral', 'fas fa-user-cog' ,Option::class),
+            ]);
         }
     }
 }

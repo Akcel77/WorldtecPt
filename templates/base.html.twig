@@ -1,12 +1,13 @@
 {% set menus = menu_service.findAll %}
-
+{% set options = option_service.findAll %}
 <!DOCTYPE html>
-<html>
+<html lang="pt">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}WorldTecPt!{% endblock %}</title>
+        <title>WorldTecPt - {% block title %}Home{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
 
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -23,12 +24,12 @@
             <div class="container d-flex flex-wrap">
                 <div class="dropdown">
                     <a class="nav nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Meu blog
+                        {{ options['blog_title'] }}
                     </a>
                     <ul class="dropdown-menu " aria-labelledby="dropdownMenuButtonAdminDashboard">
                         <li><a class="dropdown-item" href="{{ path('admin') }}">Painel de controle</a></li>
                         {% if is_granted('ROLE_ADMIN') %}
-                        <li><a class="dropdown-item" href="{{ ea_index('MenuCrudController') }}">Menus</a></li>
+                        <li><a class="dropdown-item" href="{{ ea_gen_url('MenuCrudController') }}">Menus</a></li>
                         {% endif %}
                     </ul>
                 </div>
@@ -37,8 +38,8 @@
                         Adicionar
                     </a>
                     <ul class="dropdown-menu " aria-labelledby="dropdownMenuButtonAdminAdd">
-                        <li><a class="dropdown-item" href="#">Artigo</a></li>
-                        <li><a class="dropdown-item" href="#">Página</a></li>
+                        <li><a class="dropdown-item" href="{{ ea_gen_url('ArticleCrudController', 'new') }}">Artigo</a></li>
+                        <li><a class="dropdown-item" href="{{ ea_gen_url('PageCrudController', 'new') }}">Página</a></li>
                     </ul>
                 </div>
 
@@ -49,7 +50,7 @@
         <div class="container">
             <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
                 <a class="d-flex align-items-center mb-3 ms-md-0 me-md-auto text-dark text-decoration-none" href="{{ path('app_home') }}">
-                    <span class="fs-4">Meu Blog</span>
+                    <span class="fs-4">{{ options['blog_title'] }}</span>
                 </a>
 
                 <ul class="nav nav-pills">
@@ -73,12 +74,17 @@
                     {% endfor %}
 
                     {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {% if '1' == options['users_can_register'] %}
                    <li>
                        <a href="{{ path('app_register') }}" class="nav-link text-dark">Registrar-se</a>
                    </li>
+                        {% endif %}
                     <li>
                         <a href="{{ path('app_login') }}" class="nav-link text-dark">Fazer login</a>
                     </li>
+
+                    <button id="changeColorButton">Changer la couleur principale</button>
+
 
                     {% else %}
                         <div class="dropdown">
@@ -105,7 +111,11 @@
         <div class="container">
             <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-3 border-top">
                 <div class="col-md-4 d-flex align-items-center">
-                    <span class="copyright">@ {{ 'now'|date('Y')  }} Looha. Todos os direitos reservados</span>
+                    <span class="copyright">
+                        {{ options['blog_copyright'] }}
+                        @ {{ 'now'|date('Y')  }}
+                        <a href="https://looha.io/" target="_blank">Looha</a>
+                    </span>
                 </div>
             </footer>
         </div>
