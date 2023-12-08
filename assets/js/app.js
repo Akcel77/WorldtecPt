@@ -5,7 +5,22 @@ import {Dropdown} from "bootstrap";
 
 document.addEventListener('DOMContentLoaded', () => {
     new App();
-})
+
+    // // Déplacer cette partie à l'intérieur de DOMContentLoaded
+    // document.getElementById('changeColorButton').addEventListener('click', function() {
+    //     console.log('test')
+    //
+    //     let rootStyle = document.documentElement.style;
+    //     let currentColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+    //
+    //     // Change la couleur entre rouge et la couleur originale
+    //     if (currentColor === '#ffffff') {
+    //         rootStyle.setProperty('--primary', '#000000');
+    //     } else {
+    //         rootStyle.setProperty('--primary', '#ffffff');
+    //     }
+    // });
+});
 
 class App{
     constructor() {
@@ -45,8 +60,7 @@ class App{
                 const commentList = document.querySelector('.comment-list');
                 const commentCount = document.querySelector('.comment-count');
                 const commentContent = document.querySelector('#comment_content');
-                commentList.insertAdjacentHTML('beforeend', json.message);
-                commentList.lastElementChild.scrollIntoView();
+                commentList.insertAdjacentHTML('afterbegin', json.message);
                 commentCount.innerText = json.numberOfComments;
                 commentContent.value = '';
             }
@@ -54,4 +68,6 @@ class App{
         })
 
     }
+
+
 }
