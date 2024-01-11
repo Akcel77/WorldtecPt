@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Classe\Search;
 use App\Entity\Article;
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -35,5 +36,26 @@ class ArticleRepository extends ServiceEntityRepository
         }
 
         return $qb->getQuery();
+    }
+
+    public function findWithSearch(Search $search)
+    {
+        $query = $this
+            ->createQueryBuilder('a')
+            ->select('c', 'a')
+            ->join('a.categories', 'c')
+            ->orderBy('a.createdAt', 'DESC');
+
+        if (!empty($search->categories)) {
+            $query->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $search->categories);
+        }
+
+        if (!empty($search->string)) {
+            $query->andWhere('a.title LIKE :string OR a.content LIKE :string')
+                ->setParameter('string', "%{$search->string}%");
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

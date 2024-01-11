@@ -1,37 +1,56 @@
 import '../css/app.scss';
 
-import {Dropdown} from "bootstrap";
-
+import { Dropdown } from "bootstrap";
 
 document.addEventListener('DOMContentLoaded', () => {
     new App();
 
-    // // Déplacer cette partie à l'intérieur de DOMContentLoaded
-    // document.getElementById('changeColorButton').addEventListener('click', function() {
-    //     console.log('test')
-    //
-    //     let rootStyle = document.documentElement.style;
-    //     let currentColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
-    //
-    //     // Change la couleur entre rouge et la couleur originale
-    //     if (currentColor === '#ffffff') {
-    //         rootStyle.setProperty('--primary', '#000000');
-    //     } else {
-    //         rootStyle.setProperty('--primary', '#ffffff');
-    //     }
-    // });
+    // Initialiser le bouton de basculement de thème et le thème actuel
+    const themeToggle = document.getElementById('theme-toggle');
+    initializeTheme();
+
+    // Gestion de l'événement de clic sur le bouton de basculement de thème
+    themeToggle.addEventListener('click', function() {
+        toggleTheme();
+        updateButtonTheme();
+    });
 });
 
-class App{
+function initializeTheme() {
+    // Charger le thème sauvegardé ou utiliser le thème clair par défaut
+    const savedTheme = localStorage.getItem('theme') || 'light-mode';
+    document.body.classList.add(savedTheme);
+    updateButtonTheme();
+}
+
+function toggleTheme() {
+    // Basculer entre le mode clair et sombre
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    const newTheme = isDarkMode ? 'light-mode' : 'dark-mode';
+    document.body.classList.replace(isDarkMode ? 'dark-mode' : 'light-mode', newTheme);
+    localStorage.setItem('theme', newTheme);
+}
+
+function updateButtonTheme() {
+    // Mettre à jour le texte du bouton de basculement de thème
+    const themeToggle = document.getElementById('theme-toggle');
+    if (document.body.classList.contains('dark-mode')) {
+        themeToggle.textContent = 'Light Mode';
+    } else {
+        themeToggle.textContent = 'Dark Mode';
+    }
+}
+
+class App {
     constructor() {
         this.enableDropdowns();
         this.handleCommentForm();
     }
 
     enableDropdowns = () => {
-        const dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+        const dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
         dropdownElementList.map(function (dropdownToggleEl) {
-            return new Dropdown(dropdownToggleEl)
+            return new Dropdown(dropdownToggleEl);
         });
     }
 
@@ -41,6 +60,7 @@ class App{
         if (null === commentForm){
             return;
         }
+
         commentForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -64,10 +84,6 @@ class App{
                 commentCount.innerText = json.numberOfComments;
                 commentContent.value = '';
             }
-
-        })
-
+        });
     }
-
-
 }

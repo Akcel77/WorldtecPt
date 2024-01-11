@@ -11,16 +11,28 @@
         </div>
         <div class="col-md-{{ rightCol ?? 7}}">
             <h2>
-                <a class="text-decoration-none" href="{{ article_show }}">{{ article.title }}</a>
+                <a class="text-decoration-none fw-bold" href="{{ article_show }}">{{ article.title }}</a>
             </h2>
-            <p>
-                {{ article.createdAt|date('d M Y') }}
-            </p>
+
             <p>
                 {{ article.featuredText ?: article.content|striptags|slice(0, 130) ~ '...' }}
             </p>
+
+            <div>
+                <img src="{{ asset('build/images/calendar.png') }}" alt="logo calendar">
+                <p>
+                    {{ article.createdAt|date('d M Y') }}  por Rita Cardoso
+                </p>
+            </div>
+
+            <p class="fst-italic">
+                <span class="comment-count">{{ article.comments|length }}</span> Comentário{% if article.comments|length > 1 %}s{% endif %}
+            </p>
+
+
 
         </div>
 
     </div>
 </article>
+<hr class="w-75 ms-auto">

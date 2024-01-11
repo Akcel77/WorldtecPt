@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="text-center py-5">
+                    <h2>{% block message %} {% endblock %}</h2>
+                    <h3>{% block description %} {% endblock %}</h3>
+                </div>
+            </div>
+            <div class="col-4">
+                <img src="{{ asset('build/images/indiana.png') }}" alt="Indiana Jones Lego">
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

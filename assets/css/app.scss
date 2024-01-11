@@ -3,19 +3,110 @@
 
 @import "~bootstrap/scss/bootstrap";
 
-//body{
-//  background-color: var(--primary);
-//}
-//
-//h1, h2, h3, h4, p, a{
-//  color: var(--success);
-//}
+
+$light-theme-bg: #009CE7;
+$light-theme-primary: #001B28;
+$light-theme-text: #000000; // Noir
+
+$dark-theme-bg: #001B28;
+$dark-theme-primary: #009CE7;
+$dark-theme-text: #FFFFFF; // Blanc
+
+@mixin light-theme {
+
+  background-color: $light-theme-bg;
+  color: $light-theme-text;
+
+  body {
+    transition: background-color 2.3s, color 2.3s;
+  }
+
+  .btn-primary {
+    background-color: $light-theme-primary;
+    transition: background-color 0.3s, border-color 0.3s;
+    border-color: $dark-theme-primary;
+
+    &:hover {
+      background-color: $dark-theme-bg; // Couleur au survol, si vous le souhaitez
+      border-color: #eeeaea;
+      color: #fff;
+    }
+
+  }
+
+  .pagination{
+    --bs-pagination-active-bg: $light-theme-primary;
+    --pagination-active-border-color: $light-theme-primary;
+    --bs-pagination-hover-color: #fafafa;
+    --bs-pagination-hover-bg: #121225;
+    --bs-pagination-hover-border-color:#121225;
+
+  }
+
+
+}
+
+@mixin dark-theme {
+  background-color: $dark-theme-bg;
+  color: $dark-theme-text;
+
+  .btn-primary {
+    background-color: $dark-theme-primary;
+
+    &:hover {
+      background-color: #ffffff;
+      border-color: #0a3622;
+      color: $dark-theme-bg;
+    }
+  }
+
+  a {
+    color: #CCC!important;
+    transition: color 2.3s;
+
+    &:hover {
+      color: #FFF;
+    }
+  }
+
+  .pagination{
+    --bs-pagination-active-bg:  $dark-theme-text;
+    --pagination-active-border-color:  $dark-theme-text;
+    --bs-pagination-hover-color: $dark-theme-primary;
+    --bs-pagination-hover-bg:  $dark-theme-text;
+    --bs-pagination-hover-border-color: $dark-theme-text;
+
+  }
+
+
+  // Autres styles pour le mode sombre
+}
+
+#theme-toggle {
+  cursor: pointer;
+  transition: transform 0.2s;
+  border-radius: 50px;
+
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+body.light-mode {
+  @include light-theme;
+}
+
+body.dark-mode {
+  @include dark-theme;
+}
 
 .comment .card{
   border-top : none;
   border-left: none;
   border-right: none;
 }
+
 
 
 .comment-no-see {
@@ -41,4 +132,158 @@
   border-radius: 10px; /* Coins arrondis pour un look moderne */
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transition douce pour hover */
 
+}
+.top-custom-card {
+  display: flex;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  overflow: hidden; /* Ensure the contents do not spill outside the border */
+  position: relative; /* For absolute positioning of children */
+}
+
+.custom-card {
+  display: flex;
+  width: 20rem; /* Adjust the width as needed */
+  height: 7rem; /* Adjust the height as needed */
+  background-color: #fff;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  overflow: hidden; /* Ensure the contents do not spill outside the border */
+  position: relative; /* For absolute positioning of children */
+}
+
+.custom-card-image {
+  flex: 0 0 50%; /* Take up half the width of the card */
+  position: relative;
+  z-index: 1;
+}
+
+.custom-card-image img {
+  width: 100%;
+  height: auto;
+
+}
+
+.top-custom-card-image img {
+  width: 100%;
+  height: 75%;
+}
+.top-card-img-top{
+  width: 100%;
+  height: 9rem;
+}
+.custom-card-info {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding-bottom: 1rem;
+  z-index: 2; /* Layered above the image */
+  background-color: #000; /* Background color */
+  color: #fff; /* Text color */
+  width: 50%; /* Match the image's visible width */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  text-align: center;
+}
+
+
+.card-time {
+  font-size: 0.75rem; /* Adjust font size as needed */
+}
+
+.custom-card-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: #0d0e0e !important;
+  background-color: rgba(255, 255, 255, 0.51);
+  text-align: center;
+  padding: 5px 0;
+  font-size: 0.875rem; /* Adjust font size as needed */
+  z-index: 2; /* Layered above the image */
+}
+
+.top-custom-card-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: #0d0e0e !important;
+  background-color: rgba(255, 255, 255, 0.65);
+  text-align: center;
+  padding: 5px 0;
+  font-size: 0.875rem; /* Adjust font size as needed */
+  z-index: 2; /* Layered above the image */
+}
+
+.featured-card {
+  /* Assurez-vous que la carte vedette prend toute la largeur disponible */
+  width: 100%;
+  height: 72%;
+}
+
+.custom-card-text{
+  color: #0a3622;
+}
+
+.container-custom{
+  width: 75%;
+  margin : 0 auto;
+}
+
+.cate-span{
+  z-index: 10;
+  padding-right: 0.3rem;
+  width: 5rem;
+  height: 1.5rem;
+  font-size: 0.6rem;
+  color: #fff;
+  border-bottom-right-radius: 10px ;
+  border-top-right-radius: 10px;
+}
+
+.category-tags {
+  position: absolute;
+  top: 0; /* Ajustez selon vos besoins */
+  left: 0; /* Ajustez selon vos besoins */
+}
+
+.test{
+  border-radius: 10px;
+  width: 50%;
+}
+
+.hover-effect-link {
+  display: inline-block; /* Permet d'appliquer la transformation */
+  transition: transform 0.3s ease, filter 0.3s ease; /* Animation fluide */
+}
+
+.hover-effect-link:hover {
+  transform: scale(1.05); /* Agrandit de 10 % */
+}
+
+.footer {
+  background-color: #343a40; /* Couleur de fond du footer */
+  color: #fff; /* Couleur du texte */
+}
+
+.footer a.text-white:hover {
+  text-decoration: none;
+  opacity: 0.7; /* Légère transparence au survol pour les liens */
+}
+
+.footer ul {
+  padding-left: 0; /* Enlève le padding par défaut des listes */
+}
+
+.footer ul li {
+  padding-bottom: 0.5rem; /* Espace entre les éléments de liste */
+}
+
+.footer h5 {
+  padding-bottom: 0.8rem; /* Espace sous les titres */
 }

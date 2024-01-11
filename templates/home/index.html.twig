@@ -1,6 +1,8 @@
+
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block body %}
     {% if notification %}
@@ -11,20 +13,113 @@
 
 
     {% endif %}
-<main class="container">
+<main class="container-custom">
+    <div class="row mt-4">
+        {% if topArticles|length > 0 %}
+            <div class="col-md-6">
+                <a href="{{ path('article_show', {'slug': topArticles[0].slug}) }}" class="hover-effect-link">
+                <!-- Premier article en plus grand -->
+{#                    <div class="top-custom-card featured-card mb-3">#}
+{#                        {% if topArticles[0].featuredImage %}#}
+{#                            <img src="{{ asset('uploads/' ~ topArticles[0].featuredImage.filename) }}" alt="{{ topArticles[0].featuredImage.altText }}" class="card-img-top">#}
+{#                        {% endif %}#}
+{#                        <div class="top-custom-card-body">#}
+
+{#                            <h5 class="top-custom-card-title fw-bold fs-6">{{ topArticles[0].title }}</h5>#}
+{#                            <p class="top-custom-card-text">{{ topArticles[0].content|striptags|slice(0, 130) ~ '...'}}</p>#}
+
+{#                        </div>#}
+{#                    </div>#}
+
+                    <div>
+                        {% if topArticles[0].featuredImage %}
+                            <img src="{{ asset('uploads/' ~ topArticles[0].featuredImage.filename) }}" alt="{{ topArticles[0].featuredImage.altText }}" class="card-img-top">
+                        {% endif %}
+                    </div>
+
+
+                </a>
+                <div>
+                    <h5 class=" fw-bold fs-6">{{ topArticles[0].title }}</h5>
+                    <p class="">{{ topArticles[0].content|raw|slice(0, 130) ~ '...'}}</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <!-- Les 4 autres articles -->
+                    {% for article in topArticles|slice(1, 6) %}
+
+                        <div class="col-md-4">
+                            <a href="{{ path('article_show', {'slug': article.slug}) }}">
+                                <div class="top-custom-card mb-3">
+                                    {% if article.featuredImage %}
+                                        <img src="{{ asset('uploads/' ~ article.featuredImage.filename) }}" alt="{{ article.featuredImage.altText }}" class="top-card-img-top">
+                                    {% endif %}
+                                    <div class="top-custom-card-body">
+                                        <div class="category-tags">
+                                            {% for category in article.getCategories %}
+                                                <span class="cate-span" style="background-color: {{ category.color }}">{{ category.name }}</span> {# ou tout autre attribut de la catégorie #}
+                                            {% endfor %}
+                                        </div>
+
+                                        <h6 class="top-custom-card-title fw-bold fs-6">{{ article.title }}</h6>
+
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+
     <div class="row">
-        <!-- Première colonne pour 'About' et 'Categories' -->
-        <div class="col-12 col-md-4"  >
-            <div class="" style="top: 2rem;">
-                {% include 'widget/about.html.twig' %}
+        <div class="col-md-4 mt-5 d-none d-sm-block">
+            <div class="">
+                {{ form(form) }}
             </div>
-            <div style="top: 2rem;">
-                {% include 'widget/categories.html.twig' %}
-            </div>
+            <h3>Os últimos artigos</h3>
+            {% for article in latestArticles %}
+
+                <div class="custom-card">
+                    <div class="custom-card-image">
+                        {% if article.featuredImage %}
+                                <img src="/uploads/{{ article.featuredImage.filename }}" alt="{{ article.featuredImage.altText }}" loading="lazy">
+                        {% endif %}
+                    </div>
+                    <div class="custom-card-info">
+                        <div class="card-time">
+                            <div>
+                                {% for category in article.getCategories %}
+                                    <span class="cate-span" style="background-color: {{ category.color }}">{{ category.name }}</span> {# ou tout autre attribut de la catégorie #}
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="card-time-div">
+                            <img src="{{ asset('build/images/calendar.png') }}" alt="logo calendar">
+                            <span class="card-time">
+                                {{ article.createdAt|date('d M  H:i') }}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="custom-card-title fw-bold fs-6">
+                        {{ article.title }}
+                    </div>
+                </div>
+
+            {% endfor %}
+
+
         </div>
 
         <!-- Deuxième colonne pour les articles -->
         <div class="col-12 col-md-8">
+
+
             <h3 class="pb-4 mb-4 fst-italic border-bottom">Artigos recentes</h3>
             <div id="article-list">
                 {% include 'article/list.html.twig' with {articles} %}
@@ -32,4 +127,8 @@
         </div>
     </div>
 </main>
+
+
 {% endblock %}
+
+

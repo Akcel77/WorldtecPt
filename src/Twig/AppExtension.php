@@ -54,31 +54,30 @@ class AppExtension extends AbstractExtension
 
         $url = $menu->getLink() ?: '#';
 
-        if ($url !== '#'){
+        if ($url != '#'){
             return $url;
         }
+
+        $name = null;
+        $slug = null;
 
         if ($article){
             $name = 'article_show';
             $slug = $article->getSlug();
-        }
-
-        if ($category){
+        } elseif ($category){
             $name = 'category_show';
             $slug = $category->getSlug();
-        }
-
-        if ($page){
+        } elseif ($page){
             $name = 'page_show';
             $slug = $page->getSlug();
         }
 
-        if (isset($name, $slug)){
-            return $url;
+        if ($name && $slug){
+            return $this->router->generate($name, [
+                'slug' => $slug
+            ]);
         }
 
-        return $this->router->generate($name, [
-            'slug' => $slug
-        ]);
+        return $url;
     }
 }
