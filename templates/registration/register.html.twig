@@ -6,8 +6,8 @@
 
 
 
-    <div class="container w-50 mx-auto">
-        <h1>Registrar-se</h1>
+    <div class="container w-50 mx-auto my-5">
+        <h1 class="my-5">Registrar-se</h1>
 
         {% if notification %}
             <div class="alert alert-success">
@@ -24,10 +24,17 @@
         {{ form_row(registrationForm.plainPassword) }}
 
 
-        <button type="submit" class="btn btn-primary">Registrar-se</button>
+        <button type="submit" class="btn btn-primary my-5">Registrar-se</button>
         {{ form_end(registrationForm) }}
 
+
+
+        <p class="mb-5">
+            Já tem uma conta? <a href="{{ path('app_register') }}">Fazer login</a>
+        </p>
     </div>
+
+
 
 
 {% endblock %}

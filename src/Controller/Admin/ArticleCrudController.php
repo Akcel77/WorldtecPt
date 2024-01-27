@@ -28,6 +28,9 @@ class ArticleCrudController extends AbstractCrudController
         yield AssociationField::new('featuredImage');
         yield DateTimeField::new('createdAt')->hideOnForm();
         yield DateTimeField::new('updatedAt')->hideOnForm();
+        yield TextField::new('youtubeVideoId', 'YouTube Video ID')
+            ->setHelp('Enter the YouTube video ID (e.g., dQw4w9WgXcQ).')
+            ->hideOnIndex();
 
 
     }

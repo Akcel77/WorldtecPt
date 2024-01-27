@@ -44,6 +44,9 @@ class Article implements TimestampedInterface
     #[ORM\ManyToOne]
     private ?Media $featuredImage = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $youtubeVideoId = null;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -199,6 +202,18 @@ class Article implements TimestampedInterface
     public function __toString(): string
     {
         return $this->getTitle();
+    }
+
+    public function getYoutubeVideoId(): ?string
+    {
+        return $this->youtubeVideoId;
+    }
+
+    public function setYoutubeVideoId(?string $youtubeVideoId): static
+    {
+        $this->youtubeVideoId = $youtubeVideoId;
+
+        return $this;
     }
 
 }

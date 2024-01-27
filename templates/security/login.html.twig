@@ -3,8 +3,8 @@
 {% block title %}Fazer login Worldtecpt{% endblock %}
 
 {% block body %}
-    <div class="container w-25">
-        <form method="post">
+    <div class="container w-25 my-5 pt-5">
+        <form method="post" class="my-5">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
@@ -25,10 +25,15 @@
                    value="{{ csrf_token('authenticate') }}"
             >
 
-            <button class="btn btn btn-primary mt-5" type="submit">
+            <button class="btn btn btn-primary my-5" type="submit">
                 Fazer login
             </button>
         </form>
+
+        <p class="mb-5 pb-5">
+
+            Ainda não tem uma conta? <a href="{{ path('app_register') }}">Registrar-se</a>
+        </p>
     </div>
 
 

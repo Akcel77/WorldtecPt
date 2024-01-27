@@ -13,7 +13,9 @@
 
 
     {% endif %}
-<main class="container-custom">
+<main class="container-custom mt-5">
+    <h1 class="text-center my-5">WorldTecPt Blog</h1>
+
     <div class="row mt-4">
         {% if topArticles|length > 0 %}
             <div class="col-md-6">
@@ -40,8 +42,8 @@
 
                 </a>
                 <div>
-                    <h5 class=" fw-bold fs-6">{{ topArticles[0].title }}</h5>
-                    <p class="">{{ topArticles[0].content|raw|slice(0, 130) ~ '...'}}</p>
+                    <h5 class="mt-2 text-center fw-bold fs-5">{{ topArticles[0].title }}</h5>
+
                 </div>
             </div>
             <div class="col-md-6">
@@ -76,7 +78,7 @@
     </div>
 
 
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-md-4 mt-5 d-none d-sm-block">
             <div class="">
                 {{ form(form) }}
@@ -126,6 +128,13 @@
             </div>
         </div>
     </div>
+
+
+{#    <div class="row d-flex my-4 mx-auto">#}
+{#        <div class="col">#}
+{#            <h3 class="text-center mt-5 mb-4">Último vídeo Youtube</h3>#}
+{#            <iframe class="d-flex mx-auto" width="560" height="315" src="https://www.youtube.com/embed/mWO9JguBKj4?si=7HE9hHJR9ILxRs5x" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>        </div>#}
+{#    </div>#}
 </main>
 
 

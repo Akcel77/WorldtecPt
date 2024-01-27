@@ -287,3 +287,24 @@ body.dark-mode {
 .footer h5 {
   padding-bottom: 0.8rem; /* Espace sous les titres */
 }
+
+
+.styled-image {
+  max-width: 100%; /* Assurez-vous que cela est défini ou utilisez 'img-fluid' de Bootstrap */
+  height: auto; /* Cela maintiendra le ratio d'aspect de l'image */
+  /* Vos autres styles... */
+}
+
+.embed-responsive-item {
+  width: 600px;
+  height: 400px;
+  max-width: 900px; /* ou toute autre largeur que vous souhaitez */
+  margin: auto;
+}
+
+@media (max-width: 576px) {
+  .embed-responsive-item {
+    width: 350px;
+    height: 200px;
+  }
+}

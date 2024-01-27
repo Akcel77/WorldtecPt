@@ -3,10 +3,22 @@
 {% block title %}{{ article.title }}{% endblock %}
 
 {% block body %}
-    <article class="container position-relative mb-2 pb-5">
+    <article class="container position-relative mb-2 pb-5 mt-5">
         <h1>{{ article.title }}</h1>
 
-        <img src="/uploads/{{ article.featuredImage.filename }}" alt="{{ article.featuredImage.altText }}" loading="lazy" width="700" height="auto" class="styled-image">
+        <div class="row">
+            <div class="custom-video-container">
+                {% if article.youtubeVideoId %}
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item d-flex mx-auto my-5"  src="https://www.youtube.com/embed/{{ article.youtubeVideoId }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+        <img src="/uploads/{{ article.featuredImage.filename }}" alt="{{ article.featuredImage.altText }}" loading="lazy" class="img-fluid styled-image">
+
 
         <p>{{ article.content|raw }}</p>
 
@@ -33,7 +45,7 @@
 
         {% else %}
         <div class="comment-no-see">
-            <p>Por favor, faça login para acessar a seção de comentários</p>
+            <p>Por favor, faça <a href="{{ path('app_login') }}">login</a> para acessar a seção de comentários</p>
         </div>
 
         {% endif %}
